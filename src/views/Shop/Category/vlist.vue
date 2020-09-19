@@ -1,6 +1,6 @@
 <template>
   <div class="table-bg">
-      <el-table  :data="catelist" row-key="id" :tree-props="{children: 'children'}">
+      <el-table :data="catelist" row-key="id" :tree-props="{children: 'children'}">
           <el-table-column prop="id" label="ID" align="center"></el-table-column>
           <el-table-column prop="catename" label="分类名称" align="center"></el-table-column>
           <el-table-column label="分类图片">

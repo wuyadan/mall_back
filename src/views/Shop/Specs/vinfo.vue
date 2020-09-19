@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="info.isAdd ? '添加规格':'修改规格'"  @close="cancel"  :visible.sync="info.isShow"   width="40%">
+  <el-dialog :title="info.isAdd ? '添加规格':'修改规格'"  @close="cancel"  :visible.sync="info.isShow"   width="520px">
     <!-- 表单 -->
     <el-form :model="forminfo" ref="form" :rules="rules" label-width="140px">
         <el-form-item label="属性名" prop="specsname">

@@ -10,7 +10,6 @@
         :default-active="$route.path"
         :collapse="iscollapse"
       >
-        <el-menu-item index="/index"><i class="el-icon-house"></i> <span slot="title">后台首页</span></el-menu-item>
         <template v-for="(item,index) in menus">
           <el-menu-item v-if="item.type==2" :index="item.url"><i :class="item.icon"></i> <span slot="title">{{item.title}}</span></el-menu-item>
           <el-submenu v-else :index="index+''">

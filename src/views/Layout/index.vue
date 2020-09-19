@@ -50,4 +50,7 @@ export default {
      position: relative;
   z-index: 1000;
 }
+.page-main{
+    width: 1146px;
+}
 </style>

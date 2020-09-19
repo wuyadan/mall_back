@@ -21,6 +21,7 @@ export default {
   background-color: #fff;
   padding: 20px;
   margin:  15px 0;
+  width: 1069px;
 }
 .el-dialog__header{
   border: 1px solid #ddd;
