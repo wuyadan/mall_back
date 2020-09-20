@@ -1,14 +1,38 @@
 <template>
-  <div>会员管理</div>
+  <div>
+     
+     <!-- 添加/修改组件 -->
+     <v-info :info="info" ref="form"></v-info>
+
+	 <!-- 列表组件 -->
+     <v-list @edit="edit"></v-list>
+  </div>
 </template>
 <script>
+import VList from "./vlist"
+import VInfo from "./vinfo"
 export default {
     data(){
-        return{  }
+        return{
+          info:{ // 这是组件的info变量！
+            isShow:false
+          },
+          list:[]
+        }
     },
-    created(){},
-    methods:{},
-    components:{}
+    methods:{
+      
+      edit(val){
+        this.info.isShow = true;
+        // 调用弹框组件的setinfo方法！
+        // console.log("这里",this.$refs)
+        // return
+        this.$refs.form.setinfo(val);
+      }
+    },
+    components:{
+      VList,VInfo
+    }
 }
 </script>
 <style scoped>
