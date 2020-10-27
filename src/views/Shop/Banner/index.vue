@@ -2,7 +2,7 @@
   <div>
      <el-button type="primary" @click="add">添加轮播</el-button>
      <!-- 列表组件 -->
-     <v-list @edit="edit"></v-list>
+     <v-list @edit="edit" ref="list"></v-list>
      <!-- 添加/修改组件 -->
      <v-info :info="info" ref="dialog"></v-info>
   </div>
@@ -30,6 +30,9 @@ export default {
         console.log("这里",this.$refs)
         // 调用弹框组件的setinfo方法！
         this.$refs.dialog.setinfo(val);
+      },
+      update(){
+        this.$refs.list.get_banner_list()
       }
     },
     components:{

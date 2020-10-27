@@ -4,8 +4,8 @@
     <el-form :model="forminfo" ref="form" :rules="rules" label-width="140px">
         <el-form-item label="菜单类型">
             <el-radio-group v-model="forminfo.type">
-                <el-radio :label="1">目录</el-radio>
-                <el-radio :label="2">菜单</el-radio>
+                <el-radio :label="1" :disabled="info.isAdd? false:true">目录</el-radio>
+                <el-radio :label="2" :disabled="info.isAdd? false:true">菜单</el-radio>
             </el-radio-group>
         </el-form-item>
          <el-form-item v-if="forminfo.type==2" label="上级目录">
@@ -15,7 +15,10 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item :label="forminfo.type==1 ?'目录名称':'菜单名称'" prop="title">
+        <el-form-item v-if="forminfo.type==1" label="目录名称" prop="title">
+            <el-input v-model="forminfo.title" placeholder="请输入名称"></el-input>
+        </el-form-item>
+        <el-form-item v-else label="菜单名称" prop="title">
             <el-input v-model="forminfo.title" placeholder="请输入名称"></el-input>
         </el-form-item>
         <el-form-item label="图标" prop="icon">
@@ -54,7 +57,7 @@ export default {
             default(){
                 return {
                     isAdd:true,
-                    isShow:false
+                    isShow:false,
                 }
             }
         }
@@ -65,7 +68,7 @@ export default {
             rules:{  // 验证规则对象！
                 title:[{required:true,message:"必填！",trigger:'blur'}],
                 url:[{required:true,message:"必填！",trigger:'blur'}]
-            }
+            },
         }
     },
     computed: {

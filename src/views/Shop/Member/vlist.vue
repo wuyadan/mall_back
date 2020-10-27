@@ -25,37 +25,32 @@
   </div>
 </template>
 <script>
-import { mapGetters,mapActions,mapMutations } from "vuex"
-import { delMember } from "@/request/member"
+import { delMember,getMember } from "@/request/member"
 export default {
     data(){
         return{
             input:'',
-            isEdit:false,
+            memberlist:[]
         }
     },
     computed: {
-        ...mapGetters({
-            memberlist:"member/memberlist",
-        })
+        
     },
     mounted() {
-        if(!this.memberlist.length){
-            this.get_member_list();
-        }
+        this.get_member()
     },
     methods:{
-        ...mapMutations({
-        }),
-        ...mapActions({
-            get_member_list:"member/get_member_list",
-        }),
+       
         change(e){
             this.$forceUpdate();
         },
         edit(val){
             this.isShow=true;
             this.$emit('edit',{...val})
+        },
+        async get_member(){
+            let res = await getMember();
+            this.memberlist=res;
         },
         async del(id){
             this.$confirm('确认删除吗?', '提示', {
@@ -67,7 +62,7 @@ export default {
                 if(res.code==200){
                     this.$message.success(res.msg)
                     // 如果本页只有1条数据！且不是第1页！
-                    this.get_member_list(); // 重新获取列表！
+                    this.get_member(); // 重新获取列表！
                 }else{
                     this.$message.error(res.msg)
                 }

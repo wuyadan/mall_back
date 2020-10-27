@@ -9,10 +9,17 @@
                         </el-form-item>
 
                         <el-form-item label="活动时间" >
-                            <el-date-picker ref="begin" style="width:150px" v-model="forminfo.begintime" prop="begintime" type="date" :picker-options="pickerStartDate" placeholder="开始日期">
+                            <!-- <el-date-picker ref="begin" style="width:150px" v-model="forminfo.begintime" prop="begintime" type="date" :picker-options="pickerStartDate" placeholder="开始日期">
                                 </el-date-picker>
                                 至
                             <el-date-picker ref="end" style="width:150px" v-model="forminfo.endtime" prop="endtime" type="date" :picker-options="pickerCloseDate" placeholder="结束日期">
+                                </el-date-picker> -->
+                                <el-date-picker
+                                    v-model="value1"
+                                    type="daterange"
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期">
                                 </el-date-picker>
                         </el-form-item>
 
@@ -57,6 +64,7 @@
 <script>
 // 导入  添加和修改的 请求封装方法！
 import { addSeckill,editSeckill } from "@/request/seckill"
+import { getFilterGoods } from "@/request/goods"
 import { mapGetters,mapActions } from "vuex"
 
 // 导入富文本编辑器
@@ -94,7 +102,7 @@ export default {
                 // second_cateid:[{required:true,message:"必填！",trigger:'blur'}],
                 // goodsid:[{required:true,message:"必填！",trigger:'blur'}],
             },
-            value1:'',
+            value1:[],
             secondlist:[], //二级分类
             goodsfilter:[],
             pickerStartDate:{
@@ -160,18 +168,25 @@ export default {
                 }
             })
         },
-        secondChange(id){  //二级列表变化
-            this.goodslist = [];
-            this.goodsfilter = [];
-            this.forminfo.goods_id = '';
-            this.goodslist.forEach(val => {
-                if(val.second_cateid == id){
-                    this.goodsfilter.push(val);
-                }
-            })
+        async secondChange(id){  //二级列表变化
+            // this.goodslist = [];
+            // this.goodsfilter = [];
+            // this.forminfo.goods_id = '';
+            // this.goodslist.forEach(val => {
+            //     if(val.second_cateid == id){
+            //         this.goodsfilter.push(val);
+            //     }
+            // })
+
+            let res = await getFilterGoods(this.forminfo.first_cateid, this.forminfo.second_cateid)
+            this.goodsfilter=res
+            // console.log(res)
+
         },
         setinfo(val){  // 将数据赋给默认defaultItem; 赋给表单
-            
+        // console.log(new Date(val.begintime*1))  //转成时间对象
+
+        this.value1 = [new Date(val.begintime*1), new Date(val.endtime*1)]
             val.children ? delete val.children:''
             // console.log(val.begintime,val.endtime);
             this.topChange(val.first_cateid)
@@ -183,20 +198,30 @@ export default {
             this.forminfo = {...val};
         },
         async sumbit(){      
-            let date = new Date(this.$refs.begin.value);
-            let year1 = date.getFullYear();
-            let month1 = date.getMonth()+1;
-            let day1 = date.getDate();
-            this.forminfo.begintime=year1+'-'+month1+'-'+day1;  
+            // let date = new Date(this.$refs.begin.value);
+            // let year1 = date.getFullYear();
+            // let month1 = date.getMonth()+1;
+            // let day1 = date.getDate();
+            // this.forminfo.begintime=year1+'-'+month1+'-'+day1;  
             
-            let date1 = new Date(this.$refs.end.value);
-            let year2 = date1.getFullYear();
-            let month2 = date1.getMonth()+1;
-            let day2 = date1.getDate();
-            this.forminfo.endtime=year2+'-'+month2+'-'+day2;
+            // let date1 = new Date(this.$refs.end.value);
+            // let year2 = date1.getFullYear();
+            // let month2 = date1.getMonth()+1;
+            // let day2 = date1.getDate();
+            // this.forminfo.endtime=year2+'-'+month2+'-'+ day2;
 
             // console.log(this.forminfo.begintime,this.forminfo.endtime); 
             // return
+
+            // console.log(this.value1);
+            // return
+            if(!this.value1.length){
+                this.$message.warning("请选择活动时间")
+                return
+            }
+            this.forminfo.begintime = this.value1[0].getTime();
+            this.forminfo.endtime = this.value1[1].getTime();
+
 
             // 表单验证！
             this.$refs.form.validate(async valid=>{
@@ -229,6 +254,7 @@ export default {
         },
         cancel(){ //  // 无论是修改成功还是添加成功，都应该让表单为空！或者弹框关闭的时候！
             this.forminfo = {...resetItem}
+            this.value1=[]
         }
     },
     components:{

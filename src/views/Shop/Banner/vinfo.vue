@@ -38,7 +38,6 @@
 <script>
 // 导入  添加和修改的 请求封装方法！
 import { addBanner,editBanner } from "@/request/banner"
-import { mapGetters,mapActions } from "vuex"
 let defaultItem = {
     title:"",  
     img:"",
@@ -70,9 +69,6 @@ export default {
         }
     },
     methods:{
-        ...mapActions({
-            get_banner_list:"banner/get_banner_list"
-        }),
         see(file){
             this.dialogVisible = true;
             this.dialogImageUrl = file.url // JS 生成的预览地址！
@@ -114,7 +110,7 @@ export default {
                     if(res.code==200){
                         this.$message.success(res.msg)
                         this.info.isShow = false;
-                        this.get_banner_list(); // 重新获取角色列表！
+                        this.$parent.update(); // 重新获取角色列表！
                         this.cancel();
                     }else{
                         this.$message.error(res.msg)

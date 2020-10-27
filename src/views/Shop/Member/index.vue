@@ -2,10 +2,10 @@
   <div>
      
      <!-- 添加/修改组件 -->
-     <v-info :info="info" ref="form"></v-info>
+     <v-info :info="info" ref="form" @update="update"></v-info>
 
 	 <!-- 列表组件 -->
-     <v-list @edit="edit"></v-list>
+     <v-list @edit="edit" ref="list"></v-list>
   </div>
 </template>
 <script>
@@ -28,6 +28,9 @@ export default {
         // console.log("这里",this.$refs)
         // return
         this.$refs.form.setinfo(val);
+      },
+      update(){
+        this.$refs.list.get_member();
       }
     },
     components:{

@@ -4,9 +4,17 @@
           <el-table-column prop="id" label="ID" align="center"></el-table-column>
           <el-table-column prop="title" label="活动名称" align="center"></el-table-column>
           
-          <el-table-column prop="begintime" label="开始时间" align="center"></el-table-column>
+          <el-table-column prop="begintime" label="开始时间" align="center">
+              <template slot-scope="scope">
+                  {{scope.row.begintime | getTime}}
+              </template>
+          </el-table-column>
          
-          <el-table-column prop="endtime" label="结束时间" align="center"></el-table-column>
+          <el-table-column prop="endtime" label="结束时间" align="center">
+              <template slot-scope="scope">
+                  {{scope.row.endtime | getTime}}
+              </template>
+          </el-table-column>
           
 
           <el-table-column label="状态">
@@ -65,9 +73,7 @@ export default {
                 if(res.code==200){
                     this.$message.success(res.msg)
                     // 如果本页只有1条数据！且不是第1页！
-                    if(this.secklist.length==1 && this.page!=1){
-                        this.SET_PAGE(this.page-1)
-                    }
+                    
                     this.get_seck_list(); // 重新获取列表！
                 }else{
                     this.$message.error(res.msg)

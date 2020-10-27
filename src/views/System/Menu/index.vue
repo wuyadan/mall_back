@@ -15,18 +15,19 @@ export default {
         return{
           info:{ // 这是组件的info变量！
             isAdd:false,
-            isShow:false
+            isShow:false,
           }
         }
     },
     created(){},
     methods:{
       add(){
-        this.info.isAdd =  this.info.isShow = true
+        this.info.isAdd =  this.info.isShow = true;
       },
       edit(val){
         this.info.isAdd = false;
         this.info.isShow = true;
+        this.info.disabled = true;
         // 调用弹框组件的setinfo方法！
         this.$refs.dialog.setinfo(val);
       }

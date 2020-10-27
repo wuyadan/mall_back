@@ -19,7 +19,7 @@
         </template>
      </el-menu>
   </div>
-</template>
+</template>                                
 <script>
 import { mapState,mapGetters } from "vuex"
 export default {
@@ -47,5 +47,11 @@ export default {
 }
 .page-menu{
   border-right: none;
+  overflow-y: auto;
 }
+::-webkit-scrollbar{
+width: 0;  
+height: 0;
+}
+
 </style>

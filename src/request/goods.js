@@ -16,6 +16,20 @@ export async function getGoods(page = 1,size=10) {
         return [];
     }
 }
+export async function getFilterGoods(fid,sid) {
+    let res = await $axios.get("/goodslist",{
+        params:{
+            fid,
+            sid
+        }
+    })
+    if(res.code==200 && res.list){
+        return res.list
+    }else{
+        return [];
+    }
+}
+
 /**
  * 添加规格
  * @param {*} data  添加的数据

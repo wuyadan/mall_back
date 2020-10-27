@@ -11,8 +11,7 @@ import category from "./modules/category"
 import specs from "./modules/specs"
 import goods from "./modules/goods"
 import seckill from "./modules/seckill"
-import banner from "./modules/banner"
-import member from "./modules/member"
+import tagsview from "./modules/tagsview"
 
 let store = new Vuex.Store({
     state:{
@@ -24,7 +23,7 @@ let store = new Vuex.Store({
         }
     },
     modules:{
-        menu, role, user, category, specs, goods, seckill, banner, member
+        menu, role, user, category, specs, goods, seckill, tagsview
     }
 })
 

@@ -25,31 +25,27 @@
   </div>
 </template>
 <script>
-import { mapGetters,mapActions,mapMutations } from "vuex"
-import { delBanner } from "@/request/banner"
+import { delBanner,getBanner } from "@/request/banner"
 export default {
     data(){
         return{
+            bannerlist:[]
         }
     },
     computed: {
-        ...mapGetters({
-            bannerlist:"banner/bannerlist",
-        })
+        
     },
     mounted() {
-        if(!this.bannerlist.length){
-            this.get_banner_list();
-        }
+        this.get_banner_list();
     },
     methods:{
-        ...mapMutations({
-        }),
-        ...mapActions({
-            get_banner_list:"banner/get_banner_list",
-        }),
+       
         edit(val){
             this.$emit('edit',{...val})
+        },
+        async get_banner_list(){
+            let res = await getBanner()
+            this.bannerlist = res;
         },
         async del(id){
             this.$confirm('确认删除吗?', '提示', {

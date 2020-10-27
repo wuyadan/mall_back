@@ -9,6 +9,7 @@
             </el-header>
             <el-main height="" class="page-main">
                 <!-- Main content -->
+                <tagslist/>
                  <router-view/>
             </el-main>
         </el-container>
@@ -18,6 +19,7 @@
 import top from "./top"
 import left from "./left"
 import { mapState } from "vuex"
+import tagslist from './tagslist'
 export default {
     data(){
         return{  }
@@ -27,7 +29,7 @@ export default {
     },
     methods:{},
     components:{
-        top,left
+        top,left,tagslist
     }
 }
 </script>
@@ -51,6 +53,13 @@ export default {
   z-index: 1000;
 }
 .page-main{
-    width: 1146px;
+    position: relative;
+    padding-top: 60px;
+    /* width: 1146px; */
 }
+.el-aside::-webkit-scrollbar,
+.el-main::-webkit-scrollbar{
+    display: none
+}
+
 </style>
